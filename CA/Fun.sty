@@ -296,14 +296,14 @@
 }
 \makeatother
 
-\definecolor{tcol_DEF}{HTML}{876C4F} % Color for Definition
-\definecolor{tcol_PRP}{HTML}{E09E42} % Color for Proposition
-\definecolor{tcol_LEM}{HTML}{89BDC8} % Color for Lemma
-\definecolor{tcol_THM}{HTML}{46367D} % Color for Theorem
-\definecolor{tcol_COR}{HTML}{D977A5} % Color for Corollary
+\definecolor{tcol_DEF}{HTML}{7A6C5D} % Color for Definition
+\definecolor{tcol_PRP}{HTML}{EB5E28} % Color for Proposition
+\definecolor{tcol_LEM}{HTML}{79B7BE} % Color for Lemma
+\definecolor{tcol_THM}{HTML}{4B2B72} % Color for Theorem
+\definecolor{tcol_COR}{HTML}{DB6FA6} % Color for Corollary
 \definecolor{tcol_REM}{HTML}{18B640} % Color for Remark
-\definecolor{tcol_PRF}{HTML}{876C4F} % Color for Proof
-\definecolor{tcol_EXA}{HTML}{294936} % Color for Example
+\definecolor{tcol_PRF}{HTML}{28231F} % Color for Proof
+\definecolor{tcol_EXA}{HTML}{79B7BE} % Color for Example
 
 \tcbset{
 tbox_DEF_style/.style={enhanced jigsaw,
@@ -323,8 +323,8 @@ tbox_PRP_style/.style={enhanced jigsaw,
         sharp corners=uphill
     },
     separator sign=.,label separator={},
-    top=\tcboxedtitleheight,bottom=2pt,left=2pt,right=2pt,
-    before skip=10pt,after skip=10pt,drop fuzzy shadow,breakable
+    sharp corners, top=\tcboxedtitleheight,bottom=2pt,left=2pt,right=2pt,
+    before skip=10pt,after skip=10pt, breakable
 },
 tbox_THM_style/.style={enhanced jigsaw,
     colback=tcol_THM!10,colframe=tcol_THM!80!black,

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.2.17)  8 JUN 2024 03:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.2.17)  8 JUN 2024 04:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1469,13 +1469,13 @@ Package logreq Info: Writing requests to 'CA.run.xml'.
 Here is how much of TeX's memory you used:
  58463 strings out of 474142
  1329497 string characters out of 5748646
- 2296499 words of memory out of 5000000
+ 2290504 words of memory out of 5000000
  79725 multiletter control sequences out of 15000+600000
  637607 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,17n,113p,2001b,2278s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/texlive/2023/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb><d:/texlive/2023/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/euler/eufm7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmbx7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmex10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmmi5.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmmi7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr5.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmri10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmss10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsy5.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on CA.pdf (9 pages, 342304 bytes).
+Output written on CA.pdf (9 pages, 334089 bytes).
 PDF statistics:
  331 PDF objects out of 1000 (max. 8388607)
  243 compressed objects within 3 object streams
