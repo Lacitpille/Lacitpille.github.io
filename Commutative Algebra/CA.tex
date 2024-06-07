@@ -1,0 +1,455 @@
+\documentclass[10pt]{extarticle}
+
+\usepackage{Fun}
+
+\title{Commutative Algebra (Study Notes)}
+\author{Lacitpille}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\definecolor{tcol_CNT1}{HTML}{72E094} % First color for Contents
+\definecolor{tcol_CNT2}{HTML}{24E2D6} % Second color for Contents
+\definecolor{tcol_CNV1}{HTML}{8E44AD} % First color for Conventions
+\definecolor{tcol_CNV2}{HTML}{A10B49} % First color for Conventions
+
+\begin{tcolorbox}[enhanced,
+    title=Contents,
+    fonttitle=\fontsize{20}{24}\sffamily\bfseries\selectfont,
+    coltitle=black,
+    fontupper=\sffamily,
+    interior style={left color=tcol_CNT1!80,right color=tcol_CNT2!80},
+    frame style={left color=tcol_CNT1!60!black,right color=tcol_CNT2!60!black},
+    attach boxed title to top center={yshift=10pt},
+    boxed title style={frame hidden,
+        interior style={left color=tcol_CNT1,right color=tcol_CNT2},
+        frame style={left color=tcol_CNT1!60!black,right color=tcol_CNT2!60!black},
+        height=24pt,bean arc,drop fuzzy shadow
+    },
+    top=2mm,bottom=2mm,left=2mm,right=2mm,
+    before skip=20mm,after skip=20mm,
+    drop fuzzy shadow,breakable]
+%
+\makeatletter
+\@starttoc{toc}
+\makeatother
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced,
+    frame hidden,
+    title=Conventions,
+    fonttitle=\large\sffamily\bfseries\selectfont,
+    interior code={
+        \shade[top color=tcol_CNV2!50,bottom color=white] ([yshift=2mm]interior.north west) arc(-180:-90:2mm)--(interior.north east)--(interior.south east)--(interior.south west)--cycle;
+        },
+    overlay={
+        \draw[tcol_CNV1!50!black,line width=0.5mm] ([xshift=2mm]frame.north west)--(frame.north east);
+    },
+    boxrule=0pt,left=2pt,right=2pt,
+    sharp corners=north,
+    attach boxed title to top left,
+    boxed title style={interior hidden,
+    left=1mm,right=1mm,
+    frame code={
+        \path[draw=tcol_CNV1!50!black,line width=0.5mm,fill=tcol_CNV1,rounded corners=2mm] ([xshift=2mm]frame.south east)--(frame.south east)--(frame.north east)--([xshift=0.25mm]frame.north west)--([xshift=0.25mm]frame.south west)--cycle;}
+    },
+    top=2mm,bottom=2mm,left=2mm,right=2mm,
+    before skip=10mm,after skip=10mm]
+%
+A ring is a commutative ring with multiplicative identity.\\
+$\N$ denotes the set $\{0,1,2,3,\ldots\}$ of natural numbers (including $0$).
+\end{tcolorbox}
+
+\newpage
+
+\section{Completion}
+
+\subsection{Filtered modules}
+Let $A$ be a ring, $\mathfrak{a}$ an ideal, and $M$ an $A$-module. A filtration $F^\bullet M$ of $M$ is an infinite descending chain of submodules $M=F^0M\supset F^1M\supset\cdots\supset F^nM\supset\cdots$, which is further called an $\mathfrak
+{a}$-filtration if $\mathfrak{a}F^nM\subset F^{n+1}M$ for all $n$, and a stable $\mathfrak{a}$-filtration if additionally $\mathfrak{a}F^nM=F^{n+1}M$ for large $n$. A module together with a filtration is called a \textbf{filtered module}.
+
+\begin{lemma}{}{bd}
+    Any two stable $\mathfrak{a}$-filtrations $F^\bullet M$ and $\widetilde{F}^\bullet M$ of $M$ have bounded difference.
+\end{lemma}
+
+\begin{proof}
+    Since $\mathfrak{a}\widetilde{F}^nM\subset \widetilde{F}^{n+1}M$ for all $n$, we have $\mathfrak{a}^nM\subset \widetilde{F}^nM$. Note $\mathfrak
+    {a}F^nM=F^{n+1}M$ whenever $n\geq n_0$ for some $n_0$, hence $F^{n+n_0}M=\mathfrak{a}^nF^{n_0}M\subset \mathfrak{a}^nM\subset \widetilde{F}^nM$.
+\end{proof}
+
+Let $M$ be a filtered $A$-module with filtration $F^\bullet M$, there is a topology on $M$ by taking the collection of all subsets of the form $x+F^nM$ as a basis \textcolor{purple}{(Verify)}, called the \textbf{linear topology} on $M$. In particular, all stable $\mathfrak{a}$-filtrations induce the same linear topology on $M$ by \cref{bd}, called the \textbf{$\mathfrak{a}$-adic topology}. 
+
+With linear topology equipped on $M$, the addition $(x,y)\mapsto x+y$ is continuous since
+\[
+(x+F^nM)+(y+F^nM)\subset (x+y)+F^nM
+\]
+and also the inversion $x\mapsto -x$ since $x+F^nM=(-x)+F^nM$, say, the linear topology is good enough to make $M$ a topological group. Under such setting, for a submodule $K$ of $M$, we have $\overline{K}=\bigcap_n(K+F^nM)$ since
+\begin{align*}
+    x\in M-\overline{K}&\iff (x+F^nM)\cap K=\varnothing\quad\text{for some}\ n\\
+    &\iff x\not\in (K+F^nM)\quad\text{for some}\ n
+\end{align*}
+In particular $\overline{\{0\}}=\bigcap_n F^nM$, $M$ is \textbf{Hausdorff} if and only if $\{0\}$ is closed (since the diagonal of $M\times M$ is the preimage of $\{0\}$ under subtraction), hence if and only if $\bigcap_n F^nM=\{0\}$. We also note that $\{0\}$ is open if and only if $F^nM=0$ for some $n$, hence if and only if $M$ is \textbf{discrete}. If the submodule $K$ of $M$ contains $F^nK$ for some $n$, it is always clopen ($x+F^nM\subset K$ for $x\in K$ and $y+F^nM\subset M-K$ for $y\in M-K$). In particular, $F^nM$ is clopen for each $n$. 
+
+\subsection{Completion via Cauchy sequences}
+Note the filtration $F^\bullet M$ of a filtered module $M$ forms a countable fundamental system of (open) neighborhoods of $0$, we are able to talk about Cauchy sequences in $M$ in the usual sense.
+
+A sequence $\{x_n\}_{n=0}^\infty$ in $M$ is called \textbf{Cauchy} if for each $n_0$, there exists $n_1$ such that $x_n-x_{n'}\in F^{n_0}M$ whenever $n,n'\geq n_1$. The set of Cauchy sequences in $M$ forms an $A$-module under termwise addition and scalar multiplication, denoted by $C(M)$. Let $Z(M)$ be the submodule of $C(M)$ consists of those with $0$ as a limit (in the usual sense), the quotient module $C(M)/Z(M)$ denoted by $\widehat{M}$, is called the \textbf{completion} of $M$ consists of equivalent classes of Cauchy sequences in $M$. We say $M$ is \textbf{complete} if every Cauchy sequence of $M$ converges.
+
+The map $\kappa_M\colon M\to\widehat{M}$ sending each element of $M$ to the class of the corresponding constant sequence is a canonical module map, which is not in general injective, hence we can not always consider $M$ as a submodule of $\widehat{M}$ in the canonical way. In fact, $\kappa_M$ is \textbf{injective} if and only if $M$ is Hausdorff since $\text{Ker}(\kappa_M)=\bigcap_n F^nM$. On the other hand, $\kappa_M$ is \textbf{surjective} if and only if each Cauchy sequence of $M$ is equivalent to a constant sequence, hence if and only if $M$ is complete. Therefore, $\kappa_M$ is \textbf{bijective} if and only if $M$ is Hausdorff and complete.
+
+\begin{example}
+    Let $A$ be an Artinian ring with Jacobson radical $\mathfrak{J}(A)$, then $A$ equipped with the $\mathfrak{J}(A)$-adic topology is discrete, hence complete, since $\mathfrak{J}(A)$ is nilpotent.
+\end{example}
+
+Let $K$ be a submodule of $M$, there is an induced filtration $F^nK:=K\cap F^nM$, under which $\widehat{K}$ can be viewed as a submodule of $\widehat{M}$, such that $\kappa_K=\kappa_M|_K$. In particular $\widehat{M}=\widehat{F^0 M}\supset\widehat{F^1 M}\supset\cdots\supset\widehat{F^n M}\supset\cdots$ forms a filtration of $\widehat{M}$.
+
+\begin{proposition}{}{}
+    The filtration $\widehat{F^nK}$ of $\widehat{K}$ is induced by $\widehat{F^nM}$, i.e. $\widehat{F^nK}=\widehat{F^nM}\cap\widehat{K}$.
+\end{proposition}
+\begin{proof}
+    $F^nK\subset F^nM$ together with $F^nK\subset K$ imply $\widehat{F^nK}\subset\widehat{F^nM}\cap\widehat{K}$. Conversely suppose $[\{x_n\}]\in\widehat{F^nM}\cap\widehat{K}$, then $x_n\in F^nM\cap K$ for large $n$, i.e. $[\{x_n\}]\in \widehat{F^nK}$.
+\end{proof}
+
+Let $f\colon M\to N$ be a map of filtered modules in the sense that $f(F^nM)\subset F^nN$ for each $n$. It is then continuous and preserves Cauchy sequences and limits, hence induces a module map $\widehat{f}\colon \widehat{M}\to\widehat{N}$ by passing $\{x_n\}\mapsto\{f(x_n)\}$ to quotients. Note that for $\{x_n\}\in C(F^nM)$
+\[
+\widehat{f|_{F^nM}}([\{x_n\}])=[\{f|_{F^nM}(x_n)\}]=[\{f(x_n)\}]=\widehat{f}([\{x_n\}])
+\]
+i.e. $\widehat{f|_{F^nM}}=\widehat{f}|_{\widehat{F^nM}}$, hence $\widehat{f}\left(\widehat{F^nM}\right)=\widehat{f|_{F^nM}}\left(\widehat{F^nM}\right)\subset\widehat{F^nN}$, $\widehat{f}$ is a map of filtered modules.
+
+\begin{proposition}{}{}
+    $M\to \widehat{M}$ is a functor from the category of filtered $A$-modules to itself.
+\end{proposition}
+\begin{proof}
+    Let $f\colon M\to N$ and $g\colon N\to Q$ be maps of filtered modules, for $\{x_n\}\in C(M)$
+    \[
+    \widehat{g\circ f}([\{x_n\}])=[\{g\circ f(x_n)\}]=\widehat{g}([\{f(x_n)\}])=\widehat{g}\circ\widehat{f}([\{x_n\}])
+    \]
+    hence $\widehat{g\circ f}=\widehat{g}\circ\widehat{f}$. It is clear that $\widehat{1_M}=1_{\widehat{M}}$ for all $M$.
+\end{proof}
+
+We now fix an ideal $\mathfrak{a}$ of $A$ and consider the $\mathfrak{a}$-adic topology both on $A$ and $M$. It is noted that $\widehat{A}$ is a ring under termwise multiplication, and $\kappa_A\colon A\to \widehat{A}$ is a ring map. Moreover, $\widehat{M}$ is an $\widehat{A}$-module by the action $[\{a_n\}][\{x_n\}]:=[\{a_nx_n\}]$, which is well defined (of course $\{a_nx_n\}\in C(M)$) since for any $n_0\geq 0$
+\begin{align*}
+    \{a_n\}\sim\{b_n\}&\implies a_n-b_n\in \mathfrak{a}^{n_0}\quad \text{for large}\ n\\
+    &\implies (a_n-b_n)x_n\in \mathfrak{a}^{n_0}M\quad\text{for large}\ n\implies \{a_nx_n\}\sim\{b_nx_n\}
+\end{align*}
+Given an ideal $\mathfrak{b}$ of $A$ with $\mathfrak{a}$-adic topology, we can define the $\widehat{A}$-submodule $\widehat{\mathfrak{b}}\widehat{M}$ of $\widehat{M}$, even if the natural map $\widehat{b}\to\widehat{A}$ is not injective. Consequently there are three filtrations of $\widehat{M}$ we can talk about, say the $\mathfrak{a}$-adic filtration $\mathfrak{a}^n\widehat{M}$, the $\widehat{\mathfrak{a}}$-adic filtration $\widehat{\mathfrak
+{a}}^n\widehat{M}$ and the induced filtration $\widehat{\mathfrak{a}^nM}$. They are not in general the same, but are so for Noetherian modules, see \Cref{Noet} (for a stronger statement, see \cite[Corollary~(22.21).]{altman2013term}).
+
+
+\begin{example}
+    Let $A=k[X]$ where $k$ is a field, then a sequence $\{f_n\}_{n=0}^\infty$ in $k[X]$ is Cauchy under the $(X)$-adic topology if and only if for each $n_0$, there exists $n_1$ such that all $f_n$ agree in degree less than $n_0$, i.e. $\{f_n\}_{n=0}^\infty$ determines a formal power series over $k$, which is $0$ if and only $\{f_n\}_{n=0}^\infty$ converges to $0$, hence $\widehat{k[X]}_{(X)}\simeq k[[X]]$.
+\end{example}
+
+\begin{example}
+    Let $A=\mathbb{Z}$, $p$ a prime integer, then a sequence $\{x_n\}_{n=0}^\infty$ in $\mathbb{Z}$ is Cauchy under the $(p)$-adic topology if and only if for each $n_0$, there exists $n_1$ such that $p^{n_0}\mid (x_n-x_{n'})$ whenever $n,n'\geq n_1$, i.e. $\{x_n\}_{n=0}^\infty$ determines a $p$-adic integer, say a formal sum of form $\sum_{i=0}^\infty z_ip^i$, which is $0$ if and only if $\{x_n\}_{n=0}^\infty$ converges to $0$, hence $\widehat{\mathbb{Z}}_{(p)}\simeq \mathbb{Z}_p$. ($\mathbb{Z}_p$ denotes the ring of $p$-adic integers).
+\end{example}
+
+
+\subsection{Completion via inverse limit}
+
+There is an alternative purely algebraic definition of completion which is often convenient (for instance the study of the exactness property). To speak of that, we first introduce some of the general ideas. 
+
+\begin{definition}{Inverse system}{}
+    Let $\mathcal{I}$ be a directed set, say a poset in which for each $i,j$ there exists $k$ such that $i,j\leq k$. an $\mathcal{I}$-inverse system in a category $\mathcal{C}$ is a functor from $\mathcal{I}^\text{op}$ to $\mathcal{C}$, where $\mathcal{I}$ is considered as a category with only morphisms $i\to j$ for $i\leq j$.
+\end{definition}
+
+This means that for each $i\in\mathcal{I}$ we are given an object $X_i\in\mathcal{C}$, and for each pair $i\leq j$ we are given a morphism $f_{i,j}\colon X_j\to X_i$, in such a way that $f_{i,i}=1_{X_i}$ and $f_{i,k}=f_{i,j}\circ f_{j,k}\colon X_k\to X_i$ whenever $i\leq j\leq k$. We shall denote the category of all $\mathcal{I}$-inverse systems as $\mathcal{C}^{\mathcal{I}^\text{op}}$ with morphisms being natural transformations. Each object $L$ in $\mathcal{C}$ determines a constant inverse system $c_L$ with all objects being $L$ and all arrows being $1_L$, which gives a functor from $\mathcal{C}$ to $\mathcal{C}^{\mathcal{I}^\text{op}}$, called the \textbf{diagonal functor}.
+
+\begin{definition}{Inverse limit}{}
+    Let $X\colon \mathcal{I}^\text{op}\to\mathcal{C}$ be an $\mathcal{I}$-inverse system, an inverse limit of $X$ is an object $L$ in $\mathcal{C}$ with a morphism (natural transformation) $c_L\to X$ that is terminal among all morphisms from a constant system to $X$. 
+\end{definition}
+
+This means that given morphism $c_{L'}\to X$, there is a unique morphism $f\colon c_{L'}\to c_L$, such that the following diagram
+\[\begin{tikzcd}
+	{c_{L'}} & X \\
+	& {c_L}
+	\arrow[from=1-1, to=1-2]
+	\arrow["f"', from=1-1, to=2-2]
+	\arrow[from=2-2, to=1-2]
+\end{tikzcd}\]
+commutes. It is a universal property, in the sense that any two solutions to it are canonically isomorphic. If inverse limits exist, any morphism between two inverse systems induces a morphism between their inverse limits, in a way that taking inverse limit becomes a functor. In fact, the inverse limit functor is a \textbf{right adjoint} functor of the diagonal functor $\mathcal{C}\to \mathcal{C}^{\mathcal{I}^\text{op}}$ (if exists). Explicitly, an inverse limit of an inverse system $\{X_i\}_{i\in\mathcal{I}}$ is an object $L$ together with $f_i\colon L\to X_i$ satisfying $f_i=f_{i,j}\circ f_j$ for all $i\leq j$, such that given any object $L'$ together with $f_i'\colon L'\to X_i$ satisfying the same property, there is a unique morphism $f\colon L'\to L$ such that $f'_i=f_i\circ f$ for each $i\in\mathcal{I}$.
+
+Indeed, not every categories admits arbitrary inverse limit, for instance, let $\mathcal{N}=(\mathbb{N},\leq)$, then $\mathcal{N}^\text{op}$ is an $\mathcal{N}$-inverse system without an inverse limit in the category $\mathcal{N}^\text{op}$, since there is no largest natural numbers. Fortunately, there is no such issue in the category $\mathbf{Mod_A}$ of modules over a ring $A$ (this is true for any category admits arbitrary small products and equalizers, see \cite[Proposition.~8.6.6]{bergman2015invitation}). In fact the inverse limit of an inverse system $M\colon\mathcal{I}^\text{op}\to\mathbf{Mod_A}$ can be constructed explicitly as
+\[
+\left\{(x_i)\in\prod_{i\in\mathcal{I}}M_i\colon x_i=f_{i,j}(x_j)\ \text{for all}\ i\leq j\right\}
+\]
+together with the usual projection onto each $M_i$ \textcolor{purple}{(Verify)}, denoted by $\varprojlim M_i$. In particular, the functor $\varprojlim\colon \mathbf{Mod_A}^{\mathcal{{I}^\text{op}}}\to \mathbf{Mod_A}$ is left exact, since every right adjoint functor preserves limits, hence preserves kernels, i.e. is left exact.
+
+\textcolor{purple}{From now on we restrict to $\mathcal{I}=\mathcal{N}$}, in which case it is convenient to talk a bit more about exactness.
+
+\begin{definition}{Mittag-Leffler condition}{}
+    An inverse system $X$ in $\mathbf{Mod_A}^{\mathcal{{N}^\text{op}}}$ is said to satisfy the \textbf{Mittag-Leffler condition}, if for every $i\in\mathcal{{N}}$ there is $c\geq i$ such that $f_{i,k}(X_k)=f_{i,c}(X_c)$ whenever $k\geq c$. 
+\end{definition}
+
+We say an inverse system a surjective system if the system of maps consists of surjections. In particular, every surjective system satisfies the Mittag-Leffler condition (ML).
+
+\begin{lemma}{}{surjective}
+    If $X\in\mathbf{Mod_A}^{\mathcal{{N}^\text{op}}}$ satisfies ML, then $\varprojlim X_i=\varprojlim X_i'$ for some surjective system $X_i'$.
+\end{lemma}
+\begin{proof}
+    Let $X_i'$ be the stable image of $f_{j,i}$ for large $j$, the system of maps $f_{i,j}$ restricts to a system of maps $X_j'\to X_i'$ which makes $X_i'$ a surjective system. It is clear that $\varprojlim X_i=\varprojlim X_i'$.
+\end{proof}
+
+\begin{proposition}{}{exact}
+    Let $0\to M_i\to N_i\xrightarrow{\varphi_i} Q_i\to 0$ be an exact sequence of inverse systems. If $M_i$ satisfies ML, then the induced sequence $0\to \varprojlim M_i\to \varprojlim N_i\xrightarrow{\varphi} \varprojlim Q_i\to 0$ is exact.
+\end{proposition}
+\begin{proof}
+    It amounts to show the surjectivity of $\varphi\colon\varprojlim N_i\to \varprojlim Q_i$. Denote $g_{i,j}$ the system of maps of $N_i$, let $(z_i)\in\varprojlim Q_i$, then $\varphi_i^{-1}(z_i)$ forms an inverse system under restrictions of $g_{i,j}$. Given $y_i\in \varphi_i^{-1}(z_i)$ and $y_k\in \varphi_k^{-1}(z_k)$, we always have $y_i-g_{i,k}(y_k)\in M_i$, which comes from some $x_k\in M_k$ under $g_{i,k}$ whenever $k\geq c$, by the ML property of $M_i$. We then have $g_{i,k}(y_k+x_k)=y_i$, which further implies that $g_{i,k}(N_k)=g_{i,c}(N_c)$ whenever $k\geq c$, i.e. $\varphi_i^{-1}(z_i)$ satisfies ML. Now by the fact that each $\varphi_i^{-1}(z_i)$ is non-empty, from \Cref{surjective} we see so is $\varprojlim \varphi_i^{-1}(z_i)$, and then so is $\varphi(z_i)$, i.e. $\varphi$ is surjective.
+\end{proof}
+
+For a filtered module with filtration $F^\bullet M$, the inverse system we really interested is the one given by $0\gets M/F^1M\gets M/F^2M\gets\cdots$ where each $f_{i,j}\colon M/F^jM\to M/F^iM$ is the canonical quotient map for $i\leq j$. 
+
+\begin{proposition}{}{}
+    The two modules $\widehat{M}$ and $\varprojlim(M/F^nM)$ are canonically isomorphic.
+\end{proposition}
+\begin{proof}
+    Let $[\{x_i\}]\in \widehat{M}$, the residue of $\{x_i\}$ in each $M/F^nM$ stabilizes, and is denoted by $\xi_n$. It is clear that $(\xi_n)\in\varprojlim(M/F^nM)$, which determines a module map $\widehat{M}\to\varprojlim(M/F^nM)$, since the residue of each sequence inside $Z(M)$ in each $M/F^nM$ stabilizes as $0$. It is clear that the map is surjective by taking arbitrary liftings, and is injective by $(\xi_n)=0\implies x_i\to 0$.
+\end{proof}
+
+Moreover, let $f\colon M\to N$ be a map of filtered modules, the induced maps $f_n\colon M/F^nM\to N/F^nN$ form a map of inverse systems, hence further induce a map $\varprojlim f_n\colon \widehat{M}\to \widehat{N}$.
+
+\begin{proposition}{}{}
+    The two maps $\widehat{f}$ and $\varprojlim f_n$ are canonically identified.
+\end{proposition}
+
+\begin{proof}
+    Let $[\{x_i\}]\in \widehat{M}$ identified with $(\xi_n)\in\varprojlim(M/F^nM)$. Note that the residue of $\{f(x_i)\}$ stabilizes as $f_n(\xi_n)$ in $N/F^nN$, hence $\widehat{f}([\{x_i\}])=[\{f(x_i)\}]$ is identified with $(f_n(\xi_n))=\left(\varprojlim f_n\right)(\xi_n)$, i.e. $\widehat{f}=\varprojlim f_n$.
+\end{proof}
+
+\begin{proposition}{}{M/N}
+    Let $N$ be a submodule of $M$, give $N$ and $M/N$ the induced filtrations $F^\bullet N=N\cap F^\bullet M$ and $F^\bullet M/F^\bullet N$, then $\widehat{M/N}=\widehat{M}/\widehat{N}$. Moreover, if $N$ contains some $F^mM$, then $\kappa_{M/N}\colon M/N\to\widehat{M/N}$ is an isomorphism.
+\end{proposition}
+\begin{proof}
+    Let $N\subset M$ be a submodule, consider the short exact sequence of inverse systems
+    \[
+    0\to N/F^nN\to M/F^nM\to \frac{M/N}{F^nM/F^nN}\to 0
+    \]
+    Since $N/F^nN$ is a  surjective systen, hence satisfies ML, say the induced sequence $0\to \widehat{N}\to \widehat{M}\to \widehat{M/N}\to 0$ is exact, i.e. $\widehat{M/N}=\widehat{M}/\widehat{N}$. Moreover, if $N\supset F^mM$, then $M/N$ is discrete since $F^mM/F^mN=0$, hence $M/N$ is complete, i.e. $\kappa_{M/N}$ is an isomorphism.
+\end{proof}
+
+\subsection{Completion of Noetherian modules}
+
+We first recall some basic facts about Noetherian modules. A module is called \textbf{Noetherian} if every submodule is finitely generated. In particular, a ring is called Noetherian if it is Noetherian over itself. A module is Noetherian if and only if it satisfies the \textbf{ascending chain condition}, say any chain $M_0\subset M_1\subset\cdots$ of submodules stabilizes, and if and only if it satisfies the \textbf{maximal condition}, say any non-empty set of submodules has maximal elements. 
+
+\begin{proposition}{}{}
+    Let $M$ be a module with submodule $N$. Then $M$ is Noetherian if and only if both $N$ and $M/N$ are Noetherian.
+\end{proposition}
+\begin{proof}
+    $(\Rightarrow)$: Any chain in $N$ or $M/N$ gives rise to a chain in $M$, in a way that the stability of the former chain is guaranteed by that of the later. $(\Leftarrow)$: Let $M_0\subset M_1\subset\cdots$ be a chain in $M$, then $M_n\cap N=M_{n+1}\cap N$ and $(M_n+N)/N=(M_{n+1}+N)/N$ for large $n$, hence $M_n=M_{n+1}$ for large $n$.
+\end{proof}
+
+In particular, a finite direct sum of modules is Noetherian if and only if so is each summand, by considering the SES $0\to M_1\to M_1\oplus (M_2\oplus\cdots\oplus M_r)\to M_2\oplus\cdots\oplus M_r\to 0$ with induction.
+
+\begin{proposition}{}{ntfg}
+    Let $M$ be an $A$-module. If $A$ is Noetherian, the followings are equivalent
+    \begin{enumerate}
+        \item $M$ is Noetherian over $A$.
+        \item $M$ is finitely generated over $A$.
+        \item $M$ is finitely presented over $A$.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    $(1)\Rightarrow(2)$: Trivial. $(2)\Rightarrow(3)$: The map $A^{\oplus r}\to M$ has finitely generated kernel since $A^{\oplus r}$ is Noetherian by (Cref). $(3)\Rightarrow(1)$: $M$ is a surjective image of a finite free module over $A$.
+\end{proof}
+
+\begin{lemma}{}{Ann}
+    Let $M$ be an $A$-module. Then $M$ is Noetherian if and only if $A/\text{Ann}(M)$ is Noetherian and $M$ is finitely generated over $A/\text{Ann}(M)$.
+\end{lemma}
+\begin{proof}
+    If $M$ is Noetherian, then trivially $M$ is finitely generated over $A$, hence over $A/\text{Ann}(M)$. Suppose $x_1,\dots,x_r$ generates $M$, the map $A\to M^{\oplus r}$ given by $a\mapsto (ax_1,\dots,ax_r)$ has kernel $A/\text{Ann}(M)$, hence induces an injection $A/\text{Ann}(M)\hookrightarrow M^{\oplus r}$, which shows that $A/\text{Ann}(M)$ is Noetherian as being a submodule of a Noetherian module. The converse is due to \Cref{ntfg}.
+\end{proof}
+
+\begin{theorem}{Artin-Rees lemma}{AR}
+Let $M$ be a Noetherian $A$-module. If $N$ is a submodule of $M$, then a stable $\mathfrak{a}$-filtration of $M$ induces one on $N$, say, there exists $k\in\mathcal{N}$, such that $\mathfrak{a}^nM\cap N=\mathfrak{a}^{n-k}(\mathfrak{a}^kM\cap N)$ whenever $n\geq k$.
+\end{theorem}
+
+\begin{proof}
+It suffices to assume that $A$ is Noetherian and $M$ is finitely generated over $A$ by \Cref{Ann} and the correspondence between $\mathfrak{a}$-filtrations over $A$ and $(\mathfrak{a}+\text{Ann}(M))/\text{Ann}(M)$-filtrations over $A/\text{Ann}(M)$ of $M$. Then see \cite[Theorem~8.5]{matsumura1989commutative} for a direct proof. Alternatively, see \Cref{stable}.
+\end{proof}
+
+\begin{corollary}{}{ARc1}
+    Let $M$ be a Noetherian $A$-module, $\mathfrak{a}$ an ideal of $A$ and $N\subset M$ a submodule. Then the $\mathfrak{a}$-adic topology on $M$ induces that on $N$.
+\end{corollary}
+
+\begin{theorem}{Exactness of completion}{}
+    When fixing an ideal $\mathfrak{a}$ of $A$, the functor $M\mapsto\widehat{M}$ is exact on Noetherian $A$-modules.
+\end{theorem}
+
+\begin{proof}
+    This is a consequence of \Cref{M/N} and \Cref{ARc1}.
+\end{proof}
+
+\begin{corollary}{}{}
+    Let $M$ be a finitely generated $A$-module. When fixing an ideal $\mathfrak{a}$ of $A$, the canonical map $\widehat{A}\otimes M\to\widehat{M}$ is surjective. Moreover, it is bijective if $A$ is Noetherian.
+\end{corollary}
+\begin{proof}
+    The canonical map $\widehat{A}\otimes M\to \widehat{M}$ is given by $[\{r_n\}]\otimes x\mapsto [\{r_nx\}]$, which is certainly natural. Let $M$ be finitely generated, we have exact sequence $N\to F\to M\to 0$ which gives the commutative diagram with exact rows
+    \[\begin{tikzcd}
+	{\widehat{A}\otimes N} & {\widehat{A}\otimes F} & {\widehat{A}\otimes M} & 0 \\
+	{\widehat{N}} & {\widehat{F}} & {\widehat{M}} & 0
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow["p", from=1-2, to=1-3]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=1-3, to=1-4]
+	\arrow[from=1-3, to=2-3]
+	\arrow[from=2-1, to=2-2]
+	\arrow["{\widehat{p}}", from=2-2, to=2-3]
+	\arrow[from=2-3, to=2-4]
+    \end{tikzcd}\]
+    Recall that taking completion commutes with taking finite direct sum, $\widehat{A}\otimes F\to \widehat{F}$ is an isomorphism, and also by \Cref{M/N}, $\widehat{p}$ is surjective, we deduce that $\widehat{A}\otimes M\to \widehat{M}$ is surjective. Moreover, if $M$ is Noetherian, we may assume that $N$ is also free, hence $\widehat{A}\otimes M\to \widehat{M}$ is an isomorphism by the Five lemma.
+\end{proof}
+
+\begin{corollary}{}{b^nM}
+    Let $M$ be a Noetherian $A$-module, $\mathfrak{a}$ and $\mathfrak{b}$ are ideals of $A$. Then under the $\mathfrak{a}$-adic topology, we have $\widehat{\mathfrak{b}^n M}=\mathfrak{b}^n\widehat{M}=\widehat{\mathfrak{b}^n}\widehat{M}=\widehat{\mathfrak{b}}^n\widehat{M}$ for $n\geq 1$.
+\end{corollary}
+\begin{proof}
+    For $n=1$, we have $\widehat{\mathfrak{b}M}=\widehat{A}\otimes \mathfrak{b}M=\mathfrak{b}(\widehat{A}\otimes M)=\mathfrak{b}\widehat{M}$. It is also clear that $\mathfrak{b}\widehat{M}=\widehat{\mathfrak{b}}\widehat{M}$ since $[\{x_n\}]\in\widehat{\mathfrak{b}}\widehat{M}\implies [\{x_n\}]=[\{b_ny_n\}]\in \widehat{\mathfrak{b}M}=\mathfrak{b}\widehat{M}$, i.e. $\widehat{\mathfrak{b}}\widehat{M}\subset \mathfrak{b}\widehat{M}$, with another inclusion being trivial. We now apply this where the ideal $\mathfrak{b}$ is replaced as $\mathfrak{b}^n$, and deduce that $\widehat{\mathfrak{b}^n M}=\mathfrak{b}^n\widehat{M}=\widehat{\mathfrak{b}^n}\widehat{M}$ for $n\geq 1$. It now remains to show that $\mathfrak{b}^n\widehat{M}=\widehat{\mathfrak{b}}^n\widehat{M}$ for $n\geq 1$, which is clear by induction, say suppose $\mathfrak{b}^{n-1}\widehat{M}=\widehat{\mathfrak{b}}^{n-1}\widehat{M}$, multiplying by $\mathfrak{b}$ yields $\mathfrak{b}^n\widehat{M}=\widehat{\mathfrak{b}}^{n-1}\left(\mathfrak{b}\widehat{M}\right)=\widehat{\mathfrak{b}}^{n-1}\left(\widehat{\mathfrak{b}}\widehat{M}\right)=\widehat{\mathfrak{b}}^n\widehat{M}$
+\end{proof}
+
+\begin{corollary}{}{Noet}
+    Let $\mathfrak{a}$ be an ideal of $A$, $M$ a Noetherian $A$-module. Then the three filtrations $\mathfrak{a}^n\widehat{M}$, $\widehat{\mathfrak{a}}^n\widehat{M}$ and $\widehat{\mathfrak{a}^nM}$ of $\widehat{M}$ coincide.
+\end{corollary}
+\begin{proof}
+    It follows by taking the ideal $\mathfrak{b}$ in \Cref{b^nM} as $\mathfrak{a}$.
+\end{proof}
+
+\begin{corollary}{}{}
+    Let $A$ be a Noetherian ring, $\mathfrak{a}$ an ideal, and $M$ a finitely generated $A$-module. If $M$ is flat, then $\widehat{M}$ is flat both over $A$ and $\widehat{A}$.
+\end{corollary}
+\begin{proof}
+    By $\widehat{M}=\widehat{A}\otimes M$, we see $\widehat{M}$ is flat over $\widehat{A}$ since $\bullet\otimes_{\widehat{A}}\left(\widehat{A}\otimes M\right)=\bullet\otimes M$. Moreover, for any ideal $\mathfrak{b}$ of $A$, since $M$ is flat, the canonical map $\mathfrak{b}\otimes M\to A\otimes M=M$ is injective with image $\mathfrak{b}M$, i.e. $\mathfrak{b}M=\mathfrak{b}\otimes M$, hence $\mathfrak{b}\widehat{M}=\widehat{A}\otimes\mathfrak{b}M=\widehat{A}\otimes\mathfrak{b}\otimes M=\mathfrak{b}\otimes\widehat{M}$, $\widehat{M}$ is flat over $A$.
+\end{proof}
+In particular, let $A$ be a Noetherian ring, $\mathfrak{a}$ an ideal, then the completion $\widehat{A}$ of $A$ is a flat $A$-algebra.
+
+\begin{theorem}{Krull intersection theorem}{} 
+Let $M$ be a Noetherian $A$-module, $\mathfrak{a}$ an ideal. Then let $N=\bigcap_{n>0}\mathfrak{a}^nM$, there exists $a\in\mathfrak{a}$ such that $(1+a)N=0$.
+\end{theorem}
+\begin{proof}
+    By \Cref{AR} $\mathfrak{a}^nM\cap N=\mathfrak{a}(\mathfrak{a}^{n-1}M\cap N)\subset\mathfrak{a}N$ for large $n$, but $\mathfrak{a}^nM\cap N=N$ by definition, hence $N\subset \mathfrak{a}N$. The result then follows by the Nakayama's lemma.
+\end{proof}
+
+\begin{corollary}{}{}
+Let $A$ be a Noetherian domain, $\mathfrak{a}$ a proper ideal. Then $\bigcap_{n>0}\mathfrak{a}^n=0$.
+\end{corollary}
+\begin{proof}
+    $1+\mathfrak{a}$ contains no zero-divisors.
+\end{proof}
+
+\begin{corollary}{}{}
+Let $M$ be a Noetherian $A$-module, $\mathfrak{a}\subset\mathfrak{J}(A)$ an ideal. Then the $\mathfrak{a}$-adic topology of $M$ is Hausdorff.
+\end{corollary}
+\begin{proof}
+    Every element of $1+\mathfrak{a}$ is a unit, hence $\bigcap_{n>0}\mathfrak{a}^nM=0$.
+\end{proof}
+
+\begin{corollary}{}{}
+    Let $(A,\mathfrak{m})$ be a local ring, $M$ a Noetherian $A$-module. Then the $\mathfrak{m}$-adic topology of $M$ is Hausdorff.
+\end{corollary}
+\begin{proof}
+    This is a special case of the former corollary.
+\end{proof}
+
+\subsection{Graded rings and modules}
+A \textbf{graded ring} is a ring $A$, together with additive subgroups $\{A_i\}_{i=0}^\infty$, such that $A=\bigoplus_{i=0}^\infty A_i$ and $A_nA_m\subset A_{n+m}$ for all $n,m$. A \textbf{graded module} is a module $M$ over a graded ring $A$, together with additive subgroups $\{M_i\}_{i=0}^\infty$, such that $M=\bigoplus_{i=0}^\infty M_i$ and $A_nM_m\subset M_{n+m}$ for all $n,m$.
+
+Let $A$ be a ring (not graded), $\mathfrak{a}$ an ideal, we can form the graded ring $\mathcal{R}(\mathfrak{a})=\bigoplus_{i=0}^\infty \mathfrak{a}^i$. Similarly, Let $M$ be a filtered $A$-module where $F^\bullet M$ is an $\mathfrak{a}$-filtration, we can form the graded $\mathcal{R}(\mathfrak{a})$-module $\mathcal{R}(F^\bullet M)=\bigoplus_{i=0}^\infty F^iM$. The \textbf{associated graded ring} of $A$ with respect to $\mathfrak{a}$ is defined as $G_\mathfrak{a}(A)=\bigoplus_{i=0}^\infty \mathfrak{a}^i/\mathfrak{a}^{i+1}$. Similarly, the \textbf{associated graded module} of $M$ with respect to $F^\bullet M$ is defined as $G_{F^\bullet M}(M)=\bigoplus_{i=0}^\infty F^iM/F^{i+1}M$, which is a graded $G_\mathfrak{a}(A)$-module.
+
+\begin{proposition}{}{stable}
+    If $\mathcal{R}(F^\bullet M)$ is finitely generated over $\mathcal{R}(\mathfrak{a})$, then $F^\bullet M$ is stable. The converse holds if $M$ is Noetherian.
+\end{proposition}
+\begin{proof}
+    Suppose $\mathcal{R}(F^\bullet M)=\bigoplus_{i=0}^\infty F^iM$ is generated by some homogeneous elements $\{x_j\}_{j=1}^r$ of degree less than or equal to some $n$. Then for $k\geq n$, each element of $F^kM$ is of the form $\sum a_jx_j$ where $a_j\in \mathfrak{a}^{k-\deg(x_j)}\subset\mathfrak{a}^{k-n}$, hence $F^kM=\mathfrak{a}^{k-n}F^nM$, $F^\bullet M$ is stable. Conversely, if $F^\bullet M$ is stable, then $\mathcal{R}(F^\bullet M)$ is generated by some homogeneous elements of degree less than or equal to some $n$. But each $F^iM$ is finitely generated if we further assume that $M$ is Noetherian, in wich case we deduce that $\mathcal{R}(F^\bullet M)$ s finitely generated.
+\end{proof}
+
+We now have a rather simple proof of the Artin-Rees lemma. 
+\begin{proof}[Another proof of \Cref{AR}]
+    Assume $A$ is Noetherian and $M$ is finitely generated. Note $\mathcal{R}(\mathfrak{a})$ is algebra finite over $A$, hence is Noetherian by the Hilbert Basis Theorem. By \Cref{stable}, $\mathcal{R}(F^\bullet M)$ is finitely generated over $\mathcal{R}(\mathfrak{a})$, hence a Noetherian $\mathcal{R}(\mathfrak{a})$-module, which further implies that $\mathcal{R}(F^\bullet N)$ is finitely generated over $\mathcal{R}(\mathfrak{a})$ as a submodule of $\mathcal{R}(F^\bullet M)$. $F^\bullet N$ is then stable by applying \Cref{stable} again.
+\end{proof}
+
+\begin{proposition}{}{}
+    If $\mathcal{R}(F^\bullet M)$ is finitely generated over $\mathcal{R}(\mathfrak{a})$, then so is $G(M)$ over $G(A)$.
+\end{proposition}
+\begin{proof}
+    $G(M)$ is a quotient of $\mathcal{R}(F^\bullet M)$, hence  finitely generated over $\mathcal{R}(\mathfrak{a})$. But $G(A)$ is also a quotient of $\mathcal{R}(\mathfrak{a})$.
+\end{proof}
+
+\begin{corollary}{}{M->G(M)}
+    If $M$ is Noetherian and $F^\bullet M$ is stable, then $G(M)$ is finitely generated over $G(A)$.
+\end{corollary}
+
+We now proceed to show that any adic completion $\widehat{M}$ of a Noetherian $A$-module is always Noetherian over $\widehat{A}$.
+
+\begin{lemma}{}{G(f)}
+    Let $A$ be a ring, $f\colon M\to N$ a map of filtered modules, then
+    \begin{enumerate}
+        \item $G(f)$ is injective \implies $\widehat{f}$ is injective.
+        \item $G(f)$ is surjective \implies $\widehat{f}$ is surjective.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    Consider the commutative diagram with exact rows
+    \[\begin{tikzcd}
+	0 & {F^nM/F^{i+1}M} & {M/F^{i+1}M} & {M/F^iM} & 0 \\
+	0 & {F^nN/F^{i+1}N} & {N/F^{i+1}N} & {N/F^iN} & 0
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-2, to=1-3]
+	\arrow["{G_i(f)}"', from=1-2, to=2-2]
+	\arrow[from=1-3, to=1-4]
+	\arrow["{f_{i+1}}"', from=1-3, to=2-3]
+	\arrow[from=1-4, to=1-5]
+	\arrow["{f_i}"', from=1-4, to=2-4]
+	\arrow[from=2-1, to=2-2]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=2-3, to=2-4]
+	\arrow[from=2-4, to=2-5]
+    \end{tikzcd}\]
+    By the snake lemma we have long exact sequence
+    \[
+    \text{Ker}\ G_i(f)\to\text{Ker}\ f_{i+1}\to\text{Ker}\ f_i\to\text{Coker}\ G_i(f)\to\text{Coker}\ f_{i+1}\to\text{Coker}\ f_i
+    \]
+    If $G(f)$ is injective, by induction we have $\text{Ker}\ f_i=0$ for all $i$, which then implies that $\widehat{f}$ is injective by \Cref{exact}. On the other hand, if $G(f)$ is surjective, by induction we have $\text{Coker}\ f_i=0$ for all $i$. Moreover, we also have $\text{Ker}\ f_{i+1}\to\text{Ker}\ f_i$ is surjective for all $i$, hence $\widehat{f}$ is surjective by applying \Cref{exact} again.
+\end{proof}
+
+\begin{proposition}{}{G(M)->M}
+    Let $A$ be a ring, $\mathfrak{a}$ an ideal, $M$ a filtered module with $F^\bullet M$ an $\mathfrak{a}$-filtration. Assume $A$ is complete, $M$ is separated and $G(M)$ is finitely generated over $G(A)$, then $M$ is complete and finitely generated over $A$.
+\end{proposition}
+\begin{proof}
+    Let $\{\mu_j\}_{j=1}^r$ be a finite set of generators of $G(M)$ consists of homogeneous generators. Set $n(j)=\deg(\mu_j)$ and lift $\mu_j$ to $x_j\in F^{n(j)}M$. Denote $A_j$ the module $A$ with filtration $F^kA_j=\mathfrak{a}^{k+n(j)}$, set $E=\bigoplus_{j=1}^r A_j$, filter $E$ with $F^kE=\bigoplus_{j=1}^r F^kA_j$, then mapping $1$ of each $A_j$ to $x_j$ defines a map of filtered modules $\varphi\colon E\to M$ since $\varphi(F^kE)\subset\mathfrak{a}^kM\subset F^kM$. By construction we see that $G(\varphi)\colon G(E)\to G(M)$ is surjective, hence by \Cref{G(f)} so is $\widehat{\varphi}$. Consider the commutative square
+    \[\begin{tikzcd}
+	E & M \\
+	{\widehat{E}} & {\widehat{M}}
+	\arrow["\varphi", from=1-1, to=1-2]
+	\arrow["{\kappa_E}"', from=1-1, to=2-1]
+	\arrow["{\kappa_M}", from=1-2, to=2-2]
+	\arrow["{\widehat{\varphi}}", from=2-1, to=2-2]
+    \end{tikzcd}\]
+    Since $E$ is free and $A$ is complete, $\kappa_E$ is surjective, hence $\widehat{\varphi}\circ\kappa_E$ is surjective, which implies that $\kappa_M$ is surjective, i.e. $M$ is complete. By hypothesis $M$ is also separated, $\kappa_M$ is then bijective, hence $\alpha$ is surjective, which implies that $M$ is finitely generated since $E$ is of finite rank. 
+\end{proof}
+
+\begin{corollary}{}{G(M)->M C}
+    Let $A$ be a ring, $\mathfrak{a}$ an ideal, $M$ a filtered module with $F^\bullet M$ an $\mathfrak{a}$-filtration. Assume $A$ is complete and $M$ is separated. If $G(M)$ is Noetherian over $G(A)$, then so is $M$ over $A$.
+\end{corollary}
+\begin{proof}
+    Let $N\subset M$ be a submodule with the induced filtration, then $N$ is separated. On the other hand $G(N)$ can be viewed as a submodule of $G(M)$ which is finitely generated, hence by \Cref{G(M)->M} $N$ is finitely generated.
+\end{proof}
+
+\begin{theorem}{}{}
+    Let $A$ be a ring, $\mathfrak{a}$ an ideal, $M$ a Noetherian module. Then $\widehat{M}$ is Noetherian over $\widehat{A}$.
+\end{theorem}
+\begin{proof}
+    We may assume that $A$ is Noetherian by \Cref{Ann}. Note the $\mathfrak{a}$-adic filtration of $M$ is trivially stable, hence $G(M)$ is finitely generated over $G(A)$ by \Cref{M->G(M)}. Since $A$ is Noetherian, $\mathfrak{a}$ is finitely generated over $A$, hence $G(A)$ is algebra finite over $A/\mathfrak{a}$, and thus is Noetherian by the Hilbert Basis Theorem since $A/\mathfrak{a}$ is Noetherian. Consequently $G(M)$ is Noetherian over $G(A)$. But $G\left(\widehat{M}\right)=G(M)$ and $G\left(\widehat{A}\right)=G(A)$, $G\left(\widehat{M}\right)$ is then Noetherian over $G\left(\widehat{A}\right)$. Recall $\widehat{A}$ is complete and $\widehat{M}$ is separated, we deduce that $\widehat{M}$ is Noetherian over $\widehat{A}$ by \Cref{G(M)->M C}.
+\end{proof}
+
+
+
+
+
+\newpage
+\phantomsection % Required if hyperref is used
+\addcontentsline{toc}{section}{References} % Adding bibliography to table of contents
+\printbibliography % Print the bibliography
+
+\end{document}

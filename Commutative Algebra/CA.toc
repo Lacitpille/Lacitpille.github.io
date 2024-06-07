@@ -1,0 +1,8 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Completion}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Filtered modules}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Completion via Cauchy sequences}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Completion via inverse limit}{3}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Completion of Noetherian modules}{5}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Graded rings and modules}{6}{subsection.1.5}%
+\contentsline {section}{References}{9}{section*.1}%
