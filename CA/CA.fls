@@ -1,8 +1,8 @@
-PWD d:/Coding/LaTeX/Study Notes/Commutative Algebra
+PWD d:/Coding/Lacitpille.github.io/CA
 INPUT d:/texlive/2023/texmf.cnf
 INPUT d:/texlive/2023/texmf-dist/web2c/texmf.cnf
 INPUT d:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT d:/Coding/LaTeX/Study Notes/Commutative Algebra/CA.tex
+INPUT d:/Coding/Lacitpille.github.io/CA/CA.tex
 OUTPUT CA.log
 INPUT d:/texlive/2023/texmf-dist/tex/latex/extsizes/extarticle.cls
 INPUT d:/texlive/2023/texmf-dist/tex/latex/extsizes/extarticle.cls
